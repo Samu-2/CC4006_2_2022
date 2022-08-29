@@ -31,25 +31,32 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 
-int main() {
-    return 0;
-}
-
 void solve(){
     // First line the number of cases
-    cinfor(t, indx){
+    cinfor(t, indx) {
         // The size of the array
+        // int t; cin >> t ;
+        dbg(t);
         cint(n);
         vector<int> to_alloc;
+        vector<int> ok_alloc;
         vector<int> output;
         forn(n, i){
-            cint(x);
-            if (x=0){
+            cint(bi);
+            if (bi=0){
                 to_alloc.push_back(i);
                 output.push_back(-1);
             } else {
-                output.push_back(x);
+                ok_alloc.push_back((i+1)/bi);
+                output.push_back((i+1)/bi);
             }
-        }   
+        }
+
     }
+    
+}
+
+int main() {
+    solve();
+    return 0;
 }
