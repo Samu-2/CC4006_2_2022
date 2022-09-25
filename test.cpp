@@ -11,23 +11,22 @@ using namespace std;
 #define INFORN(vin) ININT(vin); FORN(indx_##vin, vin)
 #define FORN  (indx, limit)  for(int indx = 0; indx < limit; indx++)
 #define FORI  (first, last, elmnt) for(auto elmnt = *first; first != last; first++, elmnt = *first)
-#define FORI  (itexpr, elmnt) for(auto itexpr,; ; )
 #define FORV  (v, elmnt)    for(auto elmnt: v) 
 #define FORS  (s, elmnt)    FORI(ITALL(s), elmnt)
 
 #define INPUT(var, type) type var; cin >> var
 #define ININT(var) INPUT(var, int)
 #define INLL (var) INPUT(var, ll)
-#define INVEC(var, varName, length) var varName(length); for (auto &INPUT_VEC_##varName: varName) cin >> INPUT_VEC_##varName
-#define INSET(var, varName, length) var varName; auto INPUT_SET_##varName; FORN(INPUT_SET_INDX_##varName, length) \
+#define INVEC(var, varName, length) vector<var> varName(length); for (auto &INPUT_VEC_##varName: varName) cin >> INPUT_VEC_##varName
+#define INSET(var, varName, length) set<var>    varName; var INPUT_SET_##varName; FORN(INPUT_SET_INDX_##varName, length) \
 									{ cin >> INPUT_SET_##varName; varName.insert(INPUT_SET_##varName); }
+#define INMST(var, varName, length) multiset<var> 
 
 #define ITALL (e) e.begin(),  e.end();
 #define ITALLR(e) e.rbegin(), e.end();
 
 // Debug
-#define dbg(x) cerr << #x << " := " << (x) << endl                                                                                                                         
-#define sep cerr << "================================" << endl 
+#define dbg(x) cerr << #x << " := " << (x) << endl
 #define forn(limit, index) for(int index = 0; index < limit; index++)
 #define cint(x) int x; cin >> x
 #define cinll(x) ll x; cin >> x
@@ -55,11 +54,7 @@ typedef pair<int,int> ii;
 
 /* #=#=#=#=#=#    MAIN   #=#=#=#=#=# */
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-
-	int n = 3; 
-	vector<int> arr(n); for (int &x: arr) cin >> x;
-	INVEC(v_i, vec, 3);
-	FORI(ITALL(vec), e){}
-    return 0;
+	for (int i=0; 10>i; i++) {
+		v_i v(10);
+	}
 }
