@@ -2,19 +2,29 @@
 using namespace std;
 
 int main () {
-    int n, k; cin >> n >> k; k++;
-    vector<bool> a(n, true);
-    int r = 1, c = 0;
-    for (int i = 0; c<n; i++, i%=n) {
-        r %= k;
-        if (!r) {
-            if (a[i]) {
-                cout << i + 1 << ' '; c ++;
-                a[i] = false;
-                r++;
-            }
+    int a, b; cin >> a >> b; b++;
+    if (!(a%b)) {
+        int p = a/b;
+        for (int i = 0; i<b; i++) {
+            for (int j = 1; j<p+1; j++)
+                cout << b*j-i << ' ';
         }
-        r = a[i] ? r+1: r;
+    } else {
+        vector<int> v(a); int i = 1; for(int &x: v) {x = i; i++;}
+        auto it = v.begin();
+        int pos = 0;
+        while(v.size()%b) {
+            if (pos+b >= v.size()) {
+                pos = pos+b-v.size();
+                it = v.begin();
+                it += pos;
+            }else {
+                pos += b;
+                it += b;
+            }
+            cout << *it << ' ';
+            v.erase(it);
+        }
     }
     cout << endl;
     return 0;

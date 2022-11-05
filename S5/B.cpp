@@ -1,28 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
 template <class T>
 struct SegmentTree{
   int N;
   vector <T> tree;
   SegmentTree(int _N){
-    N = _N;           
-    tree.resize(4*N);       // Able to fit all the elements
-    build(0, 0, N-1); 
+    N = _N;
+    tree.resize(4*N);
+    build(0, 0, N-1);
   }
 
   SegmentTree(vector<T> &init) {
-    N = init.size();         
-    tree.resize(4*N);       // Same 
-    build(0, 0, N-1, init);  
+    N = init.size();
+    tree.resize(4*N);
+    build(0, 0, N-1, init);
   }
 
-  T merge(T a, T b){ 
-    return a + b; // merge function into a new node
+  T merge(T a, T b){ // Reemplazar esta funcion para determinar como juntar dos nodos para obtener el valor de su padre, en este caso es suma
+    return a + b;
   }
   
   void build(int n, int i, int j){
-    if(i == j){     
-      tree[n] = 0; // starting it by 0's
-      return;       
-    }               
+    if(i == j){
+      tree[n] = 0;
+      return;
+    }
     int mid = (i+j)/2;
     build(2*n+1, i, mid);
     build(2*n+2, mid+1, j);
@@ -31,8 +35,8 @@ struct SegmentTree{
 
   void build(int n, int i, int j, vector<T> &init){
     if(i == j){
-      tree[n] = init[i];  // going through the list
-      return;             
+      tree[n] = init[i];
+      return;
     }
     int mid = (i+j)/2;
     build(2*n+1, i, mid, init);
@@ -40,16 +44,16 @@ struct SegmentTree{
     tree[n] = merge(tree[2*n+1], tree[2*n+2]);
   }
 
-  T query(int l, int r){  // query between l and r
+  T query(int l, int r){
     return query(0, 0, N-1, l, r);
   }
 
   T query(int n, int i, int j, int l, int r){
-    if(l <= i && j <= r) return tree[n];  // it's actually inside the tree
-    int mid = (i+j)/2;                    // Search divided by MID, SL and SR
-    if(mid < l || r < i)                  // MID out of bounds or SR out of bounds!
+    if(l <= i && j <= r) return tree[n];  // Already there case
+    int mid = (i+j)/2;
+    if(mid < l || r < i)                  //
       return query(2*n+2, mid+1, j, l, r);
-    if(j < l || r < mid+1)                // MID 
+    if(j < l || r < mid+1)
       return query(2*n+1, i, mid, l, r);
     return merge(
         query(2*n+1, i, mid, l, r),
@@ -85,3 +89,20 @@ struct SegmentTree{
     else return search(2*n+2, mid+1, j, val-tree[2*n+1]);
   }
 };
+
+int main ()  {
+  int N; cin >> N;
+  vector<ll> f(N); for (ll &x: f) cin >> x;
+  
+  return 0;
+}
+/* 
+5
+1 3 2 4 2
+4
+1 5
+2 5
+3 5
+4 5
+
+*/

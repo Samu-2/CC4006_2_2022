@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-typedef pair<ll, ll> pos;
-typedef pair<pos, pos> range;
+typedef pair<ll, ll> range;
 
 template <class T>
 struct SegmentTree{
@@ -21,40 +20,31 @@ struct SegmentTree{
   }
 
   T merge(T l, T r){ // Reemplazar esta funcion para determinar como juntar dos nodos para obtener el valor de su padre, en este caso es suma
-    range rt;
-    pos p1, p2, p3, p4;
-    p1 = l.first; p2 = l.second;
-    p3 = r.first; p4 = r.second;
-    vector<pos> v{p1, p2, p3, p4};
-    sort(v.begin(), v.end());
-    rt.first = v.back(); v.pop_back();
-    rt.second = v.back();
-    return rt;
-  }
-
-  T merge(T l, T r, int a, int b){ // Reemplazar esta funcion para determinar como juntar dos nodos para obtener el valor de su padre, en este caso es suma
-    range rt;
-    pos p1, p2, p3, p4;
-    p1 = l.first; p2 = l.second;
-    p3 = r.first; p4 = r.second;
-    vector<pos> v{p1, p2, p3, p4};
-    sort(v.begin(), v.end());
-    pos x = v.back();
-    while (!(a <= x.second) && !(x.second <= b)) {
-      v.pop_back(); x = v.back();
+    range res;
+    vector<ll> srt;
+    ll lM = max(l.first, l.second);
+    ll lm = min(l.first, l.second);
+    ll rM = max(r.first, r.second);
+    ll rm = min(r.first, r.second);
+    if (rM < lm || rm > lM) {
+      if (rM < lm) {
+        res.first  = l.first;
+        res.second = l.second; 
+      } else {
+        res.first  = r.first;
+        res.second = r.second; 
+      }
     }
-    rt.first = x;
-    x = v.back();
-    while (!(a <= x.second) && !(x.second <= b)) {
-      v.pop_back(); x = v.back();
+    else {
+      res.first  = lM;
+      res.second = rM;
     }
-    rt.second = x;
-    return rt;
+    return res;
   }
   
   void build(int n, int i, int j){
     if(i == j){
-      tree[n] = pos(0, 0);
+      tree[n] = range(0, 0);
       return;
     }
     int mid = (i+j)/2;
@@ -87,8 +77,7 @@ struct SegmentTree{
       return query(2*n+1, i, mid, l, r);
     return merge(
         query(2*n+1, i, mid, l, r),
-        query(2*n+2, mid+1, j, l, r),
-        l, r);
+        query(2*n+2, mid+1, j, l, r));
   }
 
   void update(int t, T val){
@@ -124,29 +113,23 @@ struct SegmentTree{
 int main () {
   ios::sync_with_stdio(0); cin.tie(0);
   int N; cin >> N;
-  pos defpos(-1, -1);
-  range def(defpos, defpos);
-  int j = 1;
-  vector<range> a(N, def); for(auto &y: a) {
-    pos x = y.first;
-    cin >> x.first;
-    x.second = j;
-    j++;
-  }
+  range def(0, 0);
+  vector<range> a(N, def); for(auto &x: a) cin >> x.first;
   SegmentTree<range> st(a);
   int transactions; cin >> transactions;
-  // st.query(0, )
   for (int i = 0; i<transactions; i++) {
     char q; int x, y; cin >> q >> x >> y;
     if (q == 'Q') {
+      x--; y--;
       range res = st.query(x, y);
-      cout << (res.first.first + res.second.first) << endl;
+      ll ret = (res.first + res.second);
+      cout << ret << endl;
     } else {
-      pos upd(y, x);
-      range updt(upd, defpos);
-      st.update(x, updt);
+      range upd(y, -1);
+      st.update(x, upd);
     }
   }
+  return 0;
 }
 
 /* 
@@ -161,4 +144,5 @@ Q 1 5
 U 1 7
 Q 1 5
 
-*/
+
+ */
